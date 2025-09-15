@@ -51,16 +51,21 @@
       />
     </div>
     <h3>Add a Feeding</h3>
-    <form
+        <form
         action="{% url 'add-feeding' cat.id %}"
         method="post"
         class="subsection-content"
-        autocomplete="off"
-    >
-        {% csrf_token %} 
-        {{ feeding_form.as_p }}
-        <button type="submit" class="btn submit">Add Feeding</button>
-    </form>
+        >
+            {% if cat.fed_for_today %}
+            <p class="fed">{{cat.name}} has been fed all their meals for today!</p>
+            {% else %}
+            <p class="unfed">{{cat.name}} might be hungry!</p>
+            {% endif %} 
+            {% csrf_token %}
+            {{ feeding_form.as_p }}
+            <button type="submit" class="btn submit">Add Feeding</button>
+        </form>
+
 <h3>Past Feedings</h3>
 {% if cat.feeding_set.all.count %}
   <table>
